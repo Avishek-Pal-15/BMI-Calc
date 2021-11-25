@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Apr  4 12:16:54 2021
-
-@author: win10
-"""
-### Create a BMI Calculation Application
-
+from flask import Flask
+from pywebio.platform.flask import webio_view
 from pywebio.input import *
 from pywebio.output import *
+
+app = Flask(__name__)
 
 def bmicalculator():
     height=input("Please enter the height in cm",type=FLOAT)
@@ -24,6 +20,8 @@ def bmicalculator():
             put_text('Your BMI is :%.1f and the person is :%s'%(bmi,tuple2))
             break
         
-    
-if __name__=='__main__':
-    bmicalculator()
+
+app.add_url_rule('/','webio_view',webio_view(bmicalculator),methods=['GET','POST','OPTIONS'])
+
+if __name__ == '__main__':
+    app.run(debug=True, port= 5000) 
